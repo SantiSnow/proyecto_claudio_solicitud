@@ -348,7 +348,22 @@ Class Action {
 	function find_sp(){
 		extract($_POST);
   		$_type = array("","Single/Freelancer","Group/Service Provider Business");
-		$get = $this->db->query("SELECT sp.*,s.service FROM persons_companies sp inner join services s on s.id = sp.service_id where service_id = $s or Concat('[',REPLACE(',','],[',areas_id),']') LIKE '%[$a]%' ");
+		$get = $this->db->query("SELECT sp.*,s.service FROM persons_companies sp inner join services s on s.id = sp.service_id where service_id = $s or Concat('[',REPLACE(',','],[',areas_id),']') LIKE '%[$a]%' AND WHERE areas_id = $a" );
+		$data = array();
+		while($row=$get->fetch_assoc()){
+			$row['type'] = $_type[$row['type']];
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+
+	function find_area_and_service($s, $a)
+	{
+		extract($_POST);
+		$_type = array("","Single/Freelancer","Group/Service Provider Business");
+		$get = $this->db->query("SELECT sp.*, s.service FROM persons_companies AS sp 
+									INNER JOIN services AS s on s.id = sp.service_id 
+									WHERE sp.service_id=".$s."  AND sp.areas_id=".$a.";");
 		$data = array();
 		while($row=$get->fetch_assoc()){
 			$row['type'] = $_type[$row['type']];

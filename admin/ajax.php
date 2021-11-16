@@ -97,5 +97,22 @@ if($action == 'find_sp'){
 	if($get)
 		echo $get;
 }
+
+if($action == 'find_sp_2'){
+	$service_id =  clean_input($_POST['s']);
+	$area_id =  clean_input($_POST['a']);
+	$get = $crud->find_area_and_service($service_id, $area_id);
+	if($get)
+		echo $get;
+}
+
+function clean_input($data)
+{
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
 ob_end_flush();
 ?>

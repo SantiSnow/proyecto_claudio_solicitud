@@ -81,7 +81,7 @@
     $('#ns').remove()
     start_load();
     $.ajax({
-      url:'admin/ajax.php?action=find_sp',
+      url:'admin/ajax.php?action=find_sp_2',
       method:"POST",
       data:{s:s,a:a},
       error:function(err){
